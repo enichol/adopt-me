@@ -10,8 +10,11 @@ import Modal from "./Modal";
 import fetchPet from "./fetchPet";
 
 const Details = () => {
+	// eslint-disable-next-line no-unused-vars
+	const [_, setAdoptedPet] = useContext(AdoptedPetContext);
 	const [showModal, setShowModal] = useState(false);
 	const { id } = useParams();
+	const navigate = useNavigate();
 	const results = useQuery(["details", id], fetchPet);
 
 	if (results.isLoading) {
@@ -39,7 +42,14 @@ const Details = () => {
 								<h1>Would you like to adopt {pet.name}?</h1>
 							</div>
 							<div className="buttons">
-								<button>Yes</button>
+								<button
+									onClick={() => {
+										setAdoptedPet(pet);
+										navigate("/");
+									}}
+								>
+									Yes
+								</button>
 								<button onClick={() => setShowModal(false)}>No</button>
 							</div>
 						</Modal>
